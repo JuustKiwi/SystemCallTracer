@@ -6,6 +6,9 @@ ARCH = x86
 
 all: loader
 
+vmlinux.h:
+	bpftool btf dump file /sys/kernel/btf/vmlinux format c > vmlinux.h
+
 tracer.bpf.o: tracer.bpf.c vmlinux.h
 	$(CC) -g -O2 -target bpf -D__TARGET_ARCH_$(ARCH) -c tracer.bpf.c -o tracer.bpf.o
 
@@ -16,4 +19,4 @@ loader: loader.c tracer.skel.h
 	$(CC) $(CFLAGS) loader.c -lbpf -o loader
 
 clean:
-	rm -f tracer.bpf.o tracer.skel.h loader
+	rm -f tracer.bpf.o tracer.skel.h loader vmlinux.h

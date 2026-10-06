@@ -1,0 +1,5 @@
+vmlinux.h
+tracer.bpf.o
+tracer.skel.h
+loader
+vmlinux.h
